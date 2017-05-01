@@ -1,5 +1,8 @@
-from flask import Flask, request, make_response, redirect
+from flask import Flask, request, make_response, redirect, abort
+from flask_script import Manager
 app = Flask(__name__)
+
+manager = Manager(app)
 
 @app.route('/')
 def index():
@@ -19,4 +22,4 @@ def the_redirect_function():
     return redirect('http://maps.warwickshire.gov.uk/ias')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    manager.run()
