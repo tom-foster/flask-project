@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}
+    {{ name }}
+{% endblock %}
+{% block body %}
+    <h1>Hello, {{ name|capitalize }} </h1>
+    <p>Jinja filter is being applied to capitlise the above using a pipe filter</p>
+    <p>Is this working?</p>
+{% endblock %}
