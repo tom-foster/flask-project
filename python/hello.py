@@ -1,4 +1,4 @@
-from flask import Flask, request, make_response
+from flask import Flask, request, make_response, redirect
 app = Flask(__name__)
 
 @app.route('/')
@@ -10,8 +10,13 @@ def index():
 
 @app.route('/user/<name>')
 def user(name):
-    '''Dynamic app route'''
-    return "<h1>Hello, %s!</h1>" % name
+    '''Dynamic app route also note I've added a response code as a second argument'''
+    return "<h1>Hello, %s!</h1>" % name, 400
+
+@app.route('/redirect')
+def the_redirect_function():
+    '''Redirect example'''
+    return redirect('http://maps.warwickshire.gov.uk/ias')
 
 if __name__ == '__main__':
     app.run(debug=True)
