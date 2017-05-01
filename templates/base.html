@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% block head %}
+        <title>{%block title %}{%endblock%} - My Application</title>
+    {% endblock %}
+</head>
+<body>
+    {% block body %}
+    {% endblock %}
+    <!--A footer is being included. Useful for common reusable elements of text.-->
+    {% include 'footer.html' %}
+</body>
+</html>
