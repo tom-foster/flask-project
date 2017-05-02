@@ -1,17 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    {% block head %}
-        <title>{%block title %}{%endblock%} - My Application</title>
-    {% endblock %}
-</head>
-<body>
-    {% block body %}
-    {% endblock %}
+{% extends 'bootstrap/base.html' %}
+
+{% block title %}Flask Application{% endblock %}
+
+{% block navbar %}
+    <div class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/" class="navbar-brand">The App</a></div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Home</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% block page_content %}{% endblock %}
+    </div>
+
     <!--A footer is being included. Useful for common reusable elements of text.-->
     {% include 'footer.html' %}
-</body>
-</html>
+{% endblock%}
+
