@@ -2,6 +2,14 @@
 
 {% block title %}Flask Application{% endblock %}
 
+{% block head %}
+    {{ super() }}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+{% endblock %}
+
 {% block navbar %}
     <div class="navbar navbar-default" role="navigation">
         <div class="container">
