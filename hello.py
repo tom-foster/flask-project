@@ -3,7 +3,7 @@ from flask import Flask, request, make_response, redirect, abort, render_templat
 from flask_script import Manager
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import Required
 
@@ -41,7 +41,7 @@ def index():
 
 @app.route('/user/<name>')
 def user(name):
-    return render_template('user.html', name=name)
+    return render_template('user.html', name=name, current_time=datetime.utcnow())
 
 @app.route('/redirect')
 def the_redirect_function():
