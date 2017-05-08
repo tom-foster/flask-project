@@ -1,5 +1,6 @@
 from datetime import datetime
-from flask import Flask, request, make_response, redirect, abort, render_template, url_for, session
+from flask import Flask, request, make_response, redirect, abort, \
+     render_template, url_for, session, flash
 from flask_script import Manager
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
@@ -33,10 +34,11 @@ def internal_server_error(e):
 def index():
     form = NameForm()
     if form.validate_on_submit():
+        old_name = session.get('name')
+        if old_name is not None and old_name != form.name.data:
+            flash("I see you've changed name!")
         session['name'] = form.name.data
         return redirect(url_for('index'))
-        name = form.name.data
-        form.name.data = ''
     return render_template('index.html', current_time=datetime.utcnow(),
                            form=form, name=session.get('name'))
 
