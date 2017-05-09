@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 from flask import Flask, request, make_response, redirect, abort, \
      render_template, url_for, session, flash
@@ -7,15 +8,22 @@ from flask_moment import Moment
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import Required
+from flask_sqlalchemy import SQLAlchemy
+
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
 #a secret key should be set as an environmental variable
 #through etc/environment on linux - other os's are available
 app.config['SECRET_KEY'] = 'thispassworldshouldbeanenvironmentvariable'
+app.config['SQLALCHEMY_DATABASE_URI'] = \
+    'sqlite:///' + os.path.join(basedir, 'data.sqlite')
+app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 
 manager = Manager(app)
 bootstrap = Bootstrap(app)
 moment = Moment(app)
+db = SQLAlchemy(app)
 
 class NameForm(FlaskForm):
     name = StringField('What is your name?', validators=[Required()])
