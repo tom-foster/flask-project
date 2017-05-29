@@ -1,5 +1,6 @@
 import os
 from datetime import datetime
+from threading import Thread
 from flask import Flask, request, make_response, redirect, \
      render_template, url_for, session, flash
 from flask_script import Manager, Shell
@@ -24,6 +25,7 @@ app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 app.config['MAIL_SERVER']  = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
+## This need to be reset every time the virtual box is closed.
 app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 app.config['FLASK_ADMIN'] = os.environ.get('FLASK_ADMIN')
@@ -61,7 +63,13 @@ def send_email(to, subject, template, **kwargs):
                   sender=app.config['FLASK_MAIL_SENDER'], recipients=[to])
     msg.body = render_template(template + '.txt', **kwargs)
     msg.html = render_template(template + '.html', **kwargs)
-    mail.send(msg)
+    thr = Thread(target=send_async_email, args=[app, msg])
+    thr.start()
+    return thr
+
+def send_async_email(app, msg):
+    with app.app_context():
+        mail.send(msg)
 
 class NameForm(FlaskForm):
     name = StringField('What is your name?', validators=[Required()])
