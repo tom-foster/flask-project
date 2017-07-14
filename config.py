@@ -8,6 +8,7 @@ class Config:
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     FLASK_MAIL_SUBJECT_PREFIX = '[TF FLASK PROJECT - BOOP!]'
     FLASK_MAIL_SENDER = 'TF FLASK APP <tom@example.com>'
+    #set this in the virtualbox environment variables
     FLASK_ADMIN = os.environ.get('FLASK_ADMIN')
 
     @staticmethod
