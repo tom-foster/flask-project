@@ -16,5 +16,10 @@ class UserModelTestCase(unittest.TestCase):
         self.app_context.pop()
 
     def test_password_setter(self):
-        user = User(password='lolhello')
+        u = User(password='lolhello')
         self.assertTrue(user.password_hash is not None)
+
+    def test_no_password_getter(self):
+        u = User(password='lolhello')
+        with self.assertRaises(AttributeError):
+            user.password
