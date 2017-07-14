@@ -20,7 +20,7 @@ class User(db.Model):
     #don't make the password readable - obvs
     @property
     def password(self):
-        raise AttributeError('password is not a readable attribute')
+        raise AttributeError('password is not a readable attribute - obvs babes')
 
     @password.setter
     def password(self, password):
