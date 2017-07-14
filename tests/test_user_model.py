@@ -4,7 +4,7 @@ from app import create_app, db
 from app.models import User
 
 class UserModelTestCase(unittest.TestCase):
-    def setup(self):
+    def setUp(self):
         self.app = create_app('testing')
         self.app_context = self.app.app_context()
         self.app_context.push()
@@ -17,7 +17,7 @@ class UserModelTestCase(unittest.TestCase):
 
     def test_password_setter(self):
         u = User(password='lolhello')
-        self.assertTrue(user.password_hash is not None)
+        self.assertTrue(u.password_hash is not None)
 
     def test_no_password_getter(self):
         u = User(password='lolhello')
@@ -32,4 +32,4 @@ class UserModelTestCase(unittest.TestCase):
     def test_password_salts_are_random(self):
         u = User(password='matching')
         u2 = User(password='matching')
-        self.assertTrue(u.password_hash != u2.password_hash)
+        self.assertTrue
