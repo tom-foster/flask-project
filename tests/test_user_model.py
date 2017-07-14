@@ -22,4 +22,5 @@ class UserModelTestCase(unittest.TestCase):
     def test_no_password_getter(self):
         u = User(password='lolhello')
         with self.assertRaises(AttributeError):
-            user.password
+            u.password
+    
