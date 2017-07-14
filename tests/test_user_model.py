@@ -23,7 +23,7 @@ class UserModelTestCase(unittest.TestCase):
         u = User(password='lolhello')
         with self.assertRaises(AttributeError):
             u.password
-    
+
     def test_password_verification(self):
         u = User(password='lolhello')
         self.assertTrue(u.verify_password('lolhello'))
@@ -33,3 +33,4 @@ class UserModelTestCase(unittest.TestCase):
         u = User(password='matching')
         u2 = User(password='matching')
         self.assertTrue
+        
