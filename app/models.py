@@ -36,7 +36,11 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.username
-    
+
+## this call back receives a user identifier as a unicod e string
+## the return value of the function must be the user object if available or
+## None otherwise
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
