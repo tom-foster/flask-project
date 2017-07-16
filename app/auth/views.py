@@ -18,7 +18,9 @@ def login():
     return render_template('auth/login.html', form=form)
 
 
-@auth.route('/secret')
+@auth.route('/logout')
 @login_required
-def secret():
-    return "Only authenticated users are allowed!"
+def logout():
+    logout_user()
+    flash('You have now been signed out.')
+    return redirect(url_for('main.index'))
