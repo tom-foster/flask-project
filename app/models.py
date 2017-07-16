@@ -26,6 +26,7 @@ class User(UserMixin, db.Model):
 
     @password.setter
     def password(self, password):
+        #had to change the method, for some reason generation an error in the db.
         self.password_hash = generate_password_hash(password,
                                                     method='pbkdf2:sha256',
                                                     salt_length=16)
