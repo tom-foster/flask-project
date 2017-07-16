@@ -8,4 +8,4 @@ class LoginForm(Form):
                                              Email()])
     password = PasswordField('Password', validators=[Requird()])
     remember_me = BooleanField('Keep me logged in')
-    submit = SubmitField('Log In')
+    submit = SubmitField('Login')
