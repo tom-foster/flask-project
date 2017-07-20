@@ -1,5 +1,6 @@
 # tf 14/07/17
 import unittest
+import time
 from app import create_app, db
 from app.models import User
 
@@ -34,3 +35,9 @@ class UserModelTestCase(unittest.TestCase):
         u2 = User(password='matching')
         self.assertTrue(u.password_hash != u2.password_hash)
         
+    def test_valid_confirmation_token(self):
+        u = User(password='lolhello')
+        db.session.add(u)
+        db.session.commit()
+        token = u.generate_confirmation_token()
+        self.assertTrue(u.confirm(token))
