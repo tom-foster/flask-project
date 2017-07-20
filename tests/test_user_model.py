@@ -41,3 +41,12 @@ class UserModelTestCase(unittest.TestCase):
         db.session.commit()
         token = u.generate_confirmation_token()
         self.assertTrue(u.confirm(token))
+
+    def test_invalid_confirmaiton_token(self):
+        u1 = User(password='lolhello')
+        u2 = User(password="goodbye")
+        db.session.add(u1)
+        db.session.add(u2)
+        db.session.commit()
+        token = u1.generate_confirmation_token()
+        self.assertFalse(u2.confirm(token))
