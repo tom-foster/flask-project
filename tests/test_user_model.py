@@ -32,5 +32,5 @@ class UserModelTestCase(unittest.TestCase):
     def test_password_salts_are_random(self):
         u = User(password='matching')
         u2 = User(password='matching')
-        self.assertTrue
+        self.assertTrue(u.password_hash != u2.password_hash)
         
