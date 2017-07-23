@@ -5,7 +5,7 @@ from flask_login import login_required, login_user, logout_user, current_user
 from . import auth
 from .. import db
 from ..models import User
-from ..email import send_email
+from ..emails import send_email
 from .forms import LoginForm, RegistrationForm
 
 @auth.route('/login', methods=['GET', 'POST'])
