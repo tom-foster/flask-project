@@ -1,0 +1,13 @@
+<p>Hi {{ user.username }},</p>
+
+<p>Welcome to Tom's flask-project.</p>
+
+<p>I just need you to confirm your account by following the link below.</p>
+
+<p>{{ url_for('auth.confirm', token=token, _external=True) }}</p>
+
+<p>Thanks, Tom</p>
+
+<p><small>I don't monitor this account for responses, so don't respond to it. :)</small></p>
+
+
