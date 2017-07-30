@@ -114,3 +114,20 @@ def password_reset_request():
               'sent to you.')
         return redirect(url_for('auth.login'))
     return render_template('auth/reset_password.html', form=form)
+
+@auth.route('/reset/<token>', methods=['GET', 'POST'])
+def password_reset(token):
+    if not current_user.is_anonymous:
+        return redirect(url_for('main.index'))
+    form = PasswordResetForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user is None:
+            return redirect(url_for('main.index'))
+        # need to add a reset password token to model
+        if user.reset_password(token, form.password.data):
+            flash('Your password has been updated.')
+            return redirect(url_for('auth.login'))
+        else:
+            return redirect(url_for('main.index'))
+    return render_template('auth/reset_password.html', form=form)
