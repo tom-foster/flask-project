@@ -78,7 +78,7 @@ def resend_confirmation():
     token = current_user.generate_confirmation_token()
     send_email(current_user.email, 'Confirm your account',
                'auth/email/confirm', user=current_user, token=token)
-    flash('A new confirmation email ahs been sent to you by email.')
+    flash('A new confirmation email has been sent to you by email.')
     return redirect(url_for('main.index'))
 
 @auth.route('/change-password', methods=['GET', 'POST'])
@@ -124,7 +124,6 @@ def password_reset(token):
         user = User.query.filter_by(email=form.email.data).first()
         if user is None:
             return redirect(url_for('main.index'))
-        # need to add a reset password token to model
         if user.reset_password(token, form.password.data):
             flash('Your password has been updated.')
             return redirect(url_for('auth.login'))

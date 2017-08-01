@@ -62,7 +62,7 @@ class User(UserMixin, db.Model):
     def reset_password(self, token, new_password):
         s = Serializer(current_app.config['SECRET_KEY'])
         try:
-            data = self.loads(token)
+            data = s.loads(token)
         except:
             return False
         if data.get('reset') != self.id:
