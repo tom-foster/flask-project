@@ -68,3 +68,17 @@ class UserModelTestCase(unittest.TestCase):
         token = u.generate_reset_token()
         self.assertTrue(u.reset_password(token, 'goodbye'))
         self.assertTrue(u.verify_password('goodbye'))
+
+    def test_invalid_reset_token(self):
+        """
+        Have a first user generate a reset token, then check 
+        if second can enter a new password on reset with first users token
+        """
+        u1 = User(password='one')
+        u2 = User(password='two')
+        db.session.add(u1)
+        db.session.add(u2)
+        db.session.commit()
+        token = u1.generate_reset_token()
+        self.assertFalse(u2.reset_password(token, 'notwo'))
+        self.assertTrue(u2.verify_password('two'))
