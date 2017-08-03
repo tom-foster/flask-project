@@ -60,3 +60,11 @@ class UserModelTestCase(unittest.TestCase):
         token = u.generate_confirmation_token(1)
         time.sleep(2)
         self.assertFalse(u.confirm(token))
+
+    def test_valid_reset_token(self):
+        u = User(password='hello')
+        db.session.add(u)
+        db.session.commit()
+        token = u.generate_reset_token()
+        self.assertTrue(u.reset_password(token, 'goodbye'))
+        self.assertTrue(u.verify_password('goodbye'))
