@@ -81,8 +81,16 @@ class User(UserMixin, db.Model):
             data = s.loads(token)
         except:
             return False
-
-
+        if data.get('change_email') != self.id:
+            return False
+        new_email = data.get('new_email')
+        if new_email is None:
+            return False
+        if self.query.filter_by(email=new_email).first() is not None:
+            return False
+        self.email = new_email
+        db.session.add(self)
+        return True
 
     def __repr__(self):
         return '<User %r>' % self.username

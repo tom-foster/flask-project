@@ -139,7 +139,6 @@ def change_email_request():
     if form.validate_on_submit():
         if current_user.verify_password(form.password.data):
             new_email = form.email.data
-            #build a generate email token method and the new html template
             token = current_user.generate_email_token(new_email)
             send_email(new_email, 'Confirm your email address',
                        'auth/email/change_email',
@@ -154,6 +153,7 @@ def change_email_request():
 @auth.route('/change-email/<token>')
 @login_required
 def change_email(token):
+
     if current_user.change_email(token):
         flash('Your email has been updated.')
     else:
