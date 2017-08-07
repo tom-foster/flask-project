@@ -71,6 +71,17 @@ class User(UserMixin, db.Model):
         db.session.add(self)
         return True
 
+    def generate_email_token(self, new_email, expiration=3600):
+        s = Serializer(current_app.config['SECRET_KEY'], expiration)
+        return s.dumps({'change_email' : self.id, 'new_email' : new_email})
+
+    def change_email(self, token):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+        except:
+            return False
+
 
 
     def __repr__(self):
