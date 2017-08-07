@@ -59,9 +59,12 @@ class PasswordResetForm(FlaskForm):
             raise ValidationError('Unknown email address.')
 
 class ChangeEmailForm(FlaskForm):
-    email = StringField('New Email', validators=[Required(), Length(1,64),
+    email = StringField('New Email', validators=[Required(), Length(1, 64),
                                                  Email()])
     password = PasswordField('Password', validators=[Required()])
     submit = SubmitField('Update email address')
 
-    
+    def validate_email(self, field):
+        """Check if they are trying to register an email that's already taken."""
+        if User.query.filter_by(email=field.data).first():
+            raise ValidationError('Email already registered.')
