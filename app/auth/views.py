@@ -7,7 +7,7 @@ from .. import db
 from ..models import User
 from ..emails import send_email
 from .forms import LoginForm, RegistrationForm, ChangePasswordForm, \
-    PasswordResetRequestForm, PasswordResetForm
+    PasswordResetRequestForm, PasswordResetForm, ChangeEmailForm
 
 @auth.before_app_request
 def before_request():
@@ -130,3 +130,23 @@ def password_reset(token):
         else:
             return redirect(url_for('main.index'))
     return render_template('auth/reset_password.html', form=form)
+
+
+@auth.route('/change-email', methods=['GET', 'POST'])
+@login.required
+def change_email_request():
+    form = ChangeEmailForm()
+    if form.validate_on_submit():
+        if current_user.verify_password(form.password.data):
+            new_email = form.email.data
+            #build a generate email token method and the new html template
+            token = current_user.generate_email_token(new_email)
+            send_email(new_email, 'Confirm your email address',
+                       'auth/email/change_email',
+                       user=current_user, token=token)
+            flash('An email with instructions to confirm your new email '
+                  'address has been sent to you.')
+            return redirect(url_for('main.index'))
+        else:
+            flash('Invalid email or password.')
+    return render_template('auth/change_email.html', form=form)
