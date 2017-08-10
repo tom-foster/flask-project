@@ -133,7 +133,7 @@ def password_reset(token):
 
 
 @auth.route('/change-email', methods=['GET', 'POST'])
-@login.required
+@login_required
 def change_email_request():
     form = ChangeEmailForm()
     if form.validate_on_submit():
