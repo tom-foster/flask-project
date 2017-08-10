@@ -153,7 +153,6 @@ def change_email_request():
 @auth.route('/change-email/<token>')
 @login_required
 def change_email(token):
-
     if current_user.change_email(token):
         flash('Your email has been updated.')
     else:
