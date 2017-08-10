@@ -1,0 +1,13 @@
+Hi {{ user.username }},
+
+It looks like you requested to change your email.
+
+To confirm your new email address use the link below:
+
+{{ url_for('auth.change_email', token=token, _external=True) }}
+
+
+
+Thanks Tom
+
+I don't check this email so don't respond to it.
