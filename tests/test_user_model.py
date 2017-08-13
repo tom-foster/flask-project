@@ -113,4 +113,3 @@ class UserModelTestCase(unittest.TestCase):
         token = u2.generate_email_change_token('tom@example.com')
         self.assertFalse(u2.change_email(token))
         self.assertTrue(u2.email == 'bob@example.com')
-
