@@ -13,3 +13,6 @@ def permission_required(permission):
             return f(*args, **kwargs)
         return decorated_function
     return decorator
+
+def admin_required(permission):
+    return permission_required(Permission.ADMINISTER)(f)
