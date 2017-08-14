@@ -7,6 +7,8 @@ from .forms import NameForm
 from .. import db
 from ..models import User
 from ..emails import send_email
+from ..decorators import admin_required, permission_required
+from flask_login import login_required
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
@@ -31,3 +33,10 @@ def index():
                            form=form, name=session.get('name'),
                            known=session.get('known', False),
                            current_time=datetime.now())
+
+# examples for the new decorators that have been made.
+@main.route('/admin')
+@login_required
+@admin_required
+def for_admins_only():
+    return "For admins only"
