@@ -1,7 +1,7 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
-from flask_login import UserMixin
+from flask_login import UserMixin, AnonymousUserMixin
 from . import db, login_manager
 
 class Permission:
@@ -130,6 +130,14 @@ class User(UserMixin, db.Model):
         self.email = new_email
         db.session.add(self)
         return True
+
+    def can(self, permissions):
+        """
+        Return a bitwise and operation between the requested permissions
+        and the permissions assigned to the role.
+        """
+        return self.role is not None and \
+            (self.role.permissions & permissions) == permissions
 
     def __repr__(self):
         return '<User %r>' % self.username
