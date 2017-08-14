@@ -139,11 +139,18 @@ class User(UserMixin, db.Model):
         return self.role is not None and \
             (self.role.permissions & permissions) == permissions
 
-    def is_adminstrator(self):
+    def is_administrator(self):
         return self.can(Permission.ADMINISTER)
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+class AnonymousUser(AnonymousUserMixin):
+    def can(self, permissions):
+        return False
+    
+    def is_administrator(self):
+        return False
 
 ## this call back receives a user identifier as a unicod e string
 ## the return value of the function must be the user object if available or
