@@ -152,6 +152,8 @@ class AnonymousUser(AnonymousUserMixin):
     def is_administrator(self):
         return False
 
+login_manager.anonymous_user = AnonymousUser
+
 ## this call back receives a user identifier as a unicod e string
 ## the return value of the function must be the user object if available or
 ## None otherwise
