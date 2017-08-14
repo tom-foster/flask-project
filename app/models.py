@@ -139,6 +139,9 @@ class User(UserMixin, db.Model):
         return self.role is not None and \
             (self.role.permissions & permissions) == permissions
 
+    def is_adminstrator(self):
+        return self.can(Permission.ADMINISTER)
+
     def __repr__(self):
         return '<User %r>' % self.username
 
