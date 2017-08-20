@@ -11,6 +11,7 @@ class Permission:
     MODERATE_COMMENTS = 0x08
     ADMINISTER = 0x80
 
+
 class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
@@ -130,7 +131,7 @@ class User(UserMixin, db.Model):
         self.email = new_email
         db.session.add(self)
         return True
-
+       
     def can(self, permissions):
         """
         Return a bitwise and operation between the requested permissions
@@ -141,14 +142,14 @@ class User(UserMixin, db.Model):
 
     def is_administrator(self):
         return self.can(Permission.ADMINISTER)
-
+     
     def __repr__(self):
         return '<User %r>' % self.username
 
 class AnonymousUser(AnonymousUserMixin):
     def can(self, permissions):
         return False
-    
+
     def is_administrator(self):
         return False
 
