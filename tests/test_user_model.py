@@ -119,3 +119,7 @@ class UserModelTestCase(unittest.TestCase):
         u = User(email='tom@example.com', password='hello')
         self.assertTrue(u.can(Permission.WRITE_ARTICLES))
         self.assertFalse(u.can(Permission.MODERATE_COMMENTS))
+
+    def test_anonymous_user(self):
+        u = AnonymousUser()
+        self.assertFalse(u.can(Permission.FOLLOW))
