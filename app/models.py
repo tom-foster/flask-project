@@ -137,7 +137,7 @@ class User(UserMixin, db.Model):
         self.email = new_email
         db.session.add(self)
         return True
-       
+
     def can(self, permissions):
         """
         Return a bitwise and operation between the requested permissions
@@ -152,7 +152,7 @@ class User(UserMixin, db.Model):
     def ping(self):
         self.last_seen = datetime.utcnow()
         db.session.add(self)
-    
+
     def __repr__(self):
         return '<User %r>' % self.username
 
