@@ -13,11 +13,12 @@ from .forms import LoginForm, RegistrationForm, ChangePasswordForm, \
 def before_request():
     ## you still want client side files to run, so static should be allowed
     ## through too
-    if current_user.is_authenticated \
-    and not current_user.confirmed \
-    and request.endpoint[:5] != 'auth.' \
-    and request.endpoint != 'static':
-        return redirect(url_for('auth.unconfirmed'))
+    if current_user.is_authenticated:
+        current_user.ping()
+        if not current_user.confirmed \
+        and request.endpoint[:5] != 'auth.' \
+        and request.endpoint != 'static':
+            return redirect(url_for('auth.unconfirmed'))
 
 @auth.route('/unconfirmed')
 def unconfirmed():
