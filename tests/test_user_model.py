@@ -1,6 +1,7 @@
 # tf 14/07/17
 import unittest
 import time
+from datetime import datetime
 from app import create_app, db
 from app.models import User, AnonymousUser, Role, Permission
 
@@ -124,3 +125,15 @@ class UserModelTestCase(unittest.TestCase):
         u = AnonymousUser()
         self.assertFalse(u.can(Permission.FOLLOW))
         
+    def test_timestamps(self):
+        """
+            Tests to make sure that the timestamps have updated correctly.
+        """
+        u = User(password='hello')
+        db.session.add(u)
+        db.session.commit()
+        self.assertTrue(
+            (datetime.utcnow() - u.member_since).total_seconds() < 3 )
+        self.assertTrue(
+            (datetime.utcnow() - u.last_seen).total_seconds() < 3)
+    
