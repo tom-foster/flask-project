@@ -133,7 +133,19 @@ class UserModelTestCase(unittest.TestCase):
         db.session.add(u)
         db.session.commit()
         self.assertTrue(
-            (datetime.utcnow() - u.member_since).total_seconds() < 3 )
+            (datetime.utcnow() - u.member_since).total_seconds() < 3)
         self.assertTrue(
             (datetime.utcnow() - u.last_seen).total_seconds() < 3)
+
+    def test_ping(self):
+        """
+            Ensure that the ping function part of the user model is working.
+        """
+        u = User(password='hello')
+        db.session.add(u)
+        db.session.commit()
+        time.sleep(2)
+        last_seen_before = u.last_seen
+        u.ping()
+        self.assertTrue(u.last_seen > last_seen_before)
     
