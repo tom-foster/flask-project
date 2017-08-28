@@ -36,3 +36,12 @@ class EditProfileAdminForm(FlaskForm):
         self.role.choices = [(role.id, role.name)
                              for role in Role.query.order_by(Role.name).all()]
         self.user = user
+
+    def validate_email(self, field):
+        """
+        need to ensure that a change was made in the first place and
+        you don't replace an email that is in use by another.
+        """
+        if field.data != self.user.email and \
+                User.query.filter_by(email=field.data).first():
+            raise ValidationError('Email already registered.')
