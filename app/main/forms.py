@@ -30,3 +30,9 @@ class EditProfileAdminForm(FlaskForm):
     location = StringField('Location', validators=[Length(0, 64)])
     about_me = TextAreaField('About me')
     submit = SubmitField('Submit')
+
+    def __init__(self, user, *args, **kwargs):
+        super(EditProfileAdminForm, self).__init__(*args, **kwargs)
+        self.role.choices = [(role.id, role.name)
+                             for role in Role.query.order_by(Role.name).all()]
+        self.user = user
