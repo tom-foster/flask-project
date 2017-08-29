@@ -5,7 +5,7 @@ from flask import render_template, session, redirect, url_for, current_app,\
 abort, flash
 from flask_login import login_required, current_user
 from . import main
-from .forms import NameForm, EditProfileForm, EditProfileAdminForm
+from .forms import NameForm, EditProfileForm, EditProfileAdminForm, PostForm
 from .. import db
 from ..models import User, Permission, Role
 from ..emails import send_email
