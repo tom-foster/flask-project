@@ -7,7 +7,7 @@ from flask_login import login_required, current_user
 from . import main
 from .forms import NameForm, EditProfileForm, EditProfileAdminForm, PostForm
 from .. import db
-from ..models import User, Permission, Role
+from ..models import User, Permission, Role, Post
 from ..emails import send_email
 from ..decorators import admin_required, permission_required
 
