@@ -69,7 +69,7 @@ class User(UserMixin, db.Model):
         import forgery_py
 
         seed()
-        for i in range(count);
+        for i in range(count):
             u = User(email=forgery_py.internet.email_address(),
                      username=forgery_py.internet.user_name(True),
                      password=forgery_py.lorem_ipsum.word(),
