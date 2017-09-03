@@ -232,6 +232,8 @@ class Post(db.Model):
 
         seed()
         user_count = User.query.count()
+        ## Only assign it to users that exit, so will produce 100 posts, but 
+        ## different amounts assigned randomly.
         for i in range(count):
             u = User.query.offset(randint(0, user_count - 1)).first()
             p = Post(body=forgery_py.lorem_ipsum.sentences(randint(1, 5)),
