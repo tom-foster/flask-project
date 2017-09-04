@@ -24,7 +24,8 @@ def index():
     pagination = Post.query.order_by(Post.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASK_POSTS_PER_PAGE'],
         error_out=False)
-    return render_template('index.html', form=form, posts=posts)
+    posts = pagination.items
+    return render_template('index.html', form=form, posts=posts, pagination=pagination)
 
 # examples for the new decorators that have been made.
 @main.route('/admin')
