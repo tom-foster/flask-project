@@ -99,5 +99,6 @@ def edit_profile_admin(id):
 
 @main.route('/post/<int:id>')
 def post(id):
+    """Pass in a post as a list so that you can reuse _posts.html for post.html"""
     post = Post.query.get_or_404(id)
     return render_template('post.html', posts=[post])
