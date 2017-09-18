@@ -225,6 +225,11 @@ class User(UserMixin, db.Model):
             f = Follow(followed=user)
             self.followed.append(f)
 
+    def unfollow(self, user):
+        f = self.followed.filter_by(followed_id=user.id).first()
+        if f:
+            self.followed.remove(f)
+
     def is_following(self, user):
         return self.followed.filter_by(
             followed_id=user.id).first() is not None
