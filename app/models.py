@@ -49,6 +49,7 @@ class Role(db.Model):
         return '<Role %r>' % self.name
 
 class Follow(db.Model):
+    """This is a self-referrential association table to users"""
     __tablename__ = 'follows'
     follower_id = db.Column(db.Integer, db.ForeignKey('users.id'),
                             primary_key=True)
@@ -71,6 +72,11 @@ class User(UserMixin, db.Model):
     last_seen = db.Column(db.DateTime(), default=datetime.utcnow)
     avatar_hash = db.Column(db.String(32))
     posts = db.relationship('Post', backref='author', lazy='dynamic')
+    followed = db.relationship('Follow',
+                               foreign_keys=[Follow.follower_id],
+                               backref=db.backref('follower', lazy='joined'),
+                               lazy='dynamic',
+                               cascade='all, delete-orphan')
 
     @staticmethod
     def generate_fake(count=100):
