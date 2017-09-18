@@ -3,7 +3,7 @@ import unittest
 import time
 from datetime import datetime
 from app import create_app, db
-from app.models import User, AnonymousUser, Role, Permission
+from app.models import User, AnonymousUser, Role, Permission, Follow
 
 class UserModelTestCase(unittest.TestCase):
     def setUp(self):
@@ -166,3 +166,51 @@ class UserModelTestCase(unittest.TestCase):
         self.assertTrue('https://secure.gravatar.com/avatar/' +
                         'e4f7cd8905e896b04425b1d08411e9fb' in gravatar_ssl)
     
+    def test_follows(self):
+        u1 = User(email='tom@example.com', password='hello')
+        u2 = User(email='keith@example.com', password='goodbye')
+        db.session.add(u1)
+        db.session.add(u2)
+        db.session.commit()
+        ## first assumptions no one is following anyone yet
+        self.assertFalse(u1.is_following(u2))
+        self.assertFalse(u1.is_followed_by(u2))
+        timestamp_before = datetime.utcnow()
+        u1.follow(u2)
+        db.session.add(u1)
+        db.session.commit()
+        timestamp_after = datetime.utcnow()
+        ## second assumptions u1 is now following u2
+        ## but u2 is not following u1, and that u2 is followed by u1
+        ##  and the counts are correct for followed and followers
+        ## of u1 and u2
+        self.assertTrue(u1.is_following(u2))
+        self.assertFalse(u1.is_followed_by(u2))
+        self.assertTrue(u2.is_followed_by(u1))
+        self.assertTrue(u1.followed.count() == 1)
+        self.assertTrue(u2.followers.count() == 1)
+        ## third assumption, u1's last followed, is u2
+        ## and that the date stamp is accurate with the commit of the follow
+        f = u1.followed.all()[-1]
+        self.assertTrue(f.followed == u2)
+        self.assertTrue(timestamp_before <= f.timestamp <= timestamp_after)
+        ## fourth assumption, u2's last follower was u1
+        f = u2.followers.all()[-1]
+        self.assertTrue(f.follower == u1)
+        ## fifth set of assumptions that once u1 unfollows u2,
+        ## the counts are all 0, including no rows in the association table
+        u1.unfollow(u2)
+        db.session.add(u1)
+        db.session.commit()
+        self.assertTrue(u1.followed.count() == 0)
+        self.assertTrue(u2.followers.count() == 0)
+        self.assertTrue(Follow.query.count() == 0)
+        ## final assumptions - if u2 follows u1, but then deletes account
+        ## no relationship should exist in the association table
+        u2.follow(u1)
+        db.session.add(u1)
+        db.session.add(u2)
+        db.session.commit()
+        db.session.delete(u2)
+        db.session.commit()
+        self.assertTrue(Follow.query.count() == 0)
