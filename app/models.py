@@ -81,7 +81,7 @@ class User(UserMixin, db.Model):
                                 foreign_keys=[Follow.followed_id],
                                 backref=db.backref('followed', lazy='joined'),
                                 lazy='dynamic',
-                                cascase='all, delete-orphan')
+                                cascade='all, delete-orphan')
 
     @staticmethod
     def generate_fake(count=100):
