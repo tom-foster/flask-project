@@ -220,10 +220,15 @@ class User(UserMixin, db.Model):
             url=url, hash=hash, size=size, default=default, rating=rating)
 
     ## four methods to deal with followers
+    def follow(self, user):
+        if not self.is_following(user):
+            f = Follow(followed=user)
+            self.followed.append(f)
+
     def is_following(self, user):
         return self.followed.filter_by(
             followed_id=user.id).first() is not None
-                
+
     def is_followed_by(self, user):
         return self.followers.filter_by(
             follower_id=user.id).first() is not None
