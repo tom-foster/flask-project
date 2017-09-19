@@ -138,3 +138,18 @@ def follow(username):
     current_user.follow(user)
     flash('You are now following %s' % username)
     return redirect(url_for('.user', username=username))
+
+@main.route('/unfollow/<username>')
+@login_required
+@permission_required(Permission.FOLLOW)
+def unfollow(username):
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        flash('Invalid user.')
+        return redirect(url_for('.index'))
+    if not current_user.is_following(user):
+        flash("You aren't following this user.")
+        return redirect(url_for('.user', username=username))
+    current_user.unfollow(user)
+    flash('You are no longer following %s' % username)
+    return redirect(url_for('.user', username=username))
