@@ -33,8 +33,8 @@ def index():
         error_out=False)
     posts = pagination.items
     return render_template('index.html', form=form, posts=posts,
-                            show_followed=show_followed,
-                            pagination=pagination)
+                           show_followed=show_followed,
+                           pagination=pagination)
 
 # examples for the new decorators that have been made.
 @main.route('/admin')
@@ -193,3 +193,11 @@ def followed_by(username):
     return render_template('followers.html', user=user, title="Followed by",
                            endpoint='.followed_by', pagination=pagination,
                            follows=follows)
+
+@main.route('/all')
+@login_required
+def show_all():
+    resp = make_response(redirect(url_for('.index')))
+    resp.set_cookie('show_followed', '', max_age=30*24*60*60)
+    return resp
+
