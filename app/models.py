@@ -109,6 +109,18 @@ class User(UserMixin, db.Model):
             except IntegrityError:
                 db.session.rollback()
 
+    @staticmethod
+    def add_self_follows():
+        """
+        Make users follow themselves, as they would expect to see their own
+         posts show up, in the followed list.
+        """
+        for user in User.query.all():
+            if not user.is_following(user):
+                user.follow(user)
+                db.session.add(user)
+                db.session.commit()
+
     # Assign the FLASK_ADMIN as the administrator
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
