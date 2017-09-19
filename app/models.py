@@ -240,7 +240,7 @@ class User(UserMixin, db.Model):
 
     @property
     def followed_posts(self):
-        """ Obtain followed posts by a join. """
+        """ Obtain followed posts by a join on followed_id and author_id. """
         return Post.query.join(Follow, Follow.followed_id == Post.author_id)\
             .filter(Follow.follower_id == self.id)
 
