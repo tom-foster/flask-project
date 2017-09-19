@@ -187,8 +187,8 @@ class UserModelTestCase(unittest.TestCase):
         self.assertTrue(u1.is_following(u2))
         self.assertFalse(u1.is_followed_by(u2))
         self.assertTrue(u2.is_followed_by(u1))
-        self.assertTrue(u1.followed.count() == 1)
-        self.assertTrue(u2.followers.count() == 1)
+        self.assertTrue(u1.followed.count() == 2)
+        self.assertTrue(u2.followers.count() == 2)
         ## third assumption, u1's last followed, is u2
         ## and that the date stamp is accurate with the commit of the follow
         f = u1.followed.all()[-1]
@@ -202,9 +202,9 @@ class UserModelTestCase(unittest.TestCase):
         u1.unfollow(u2)
         db.session.add(u1)
         db.session.commit()
-        self.assertTrue(u1.followed.count() == 0)
-        self.assertTrue(u2.followers.count() == 0)
-        self.assertTrue(Follow.query.count() == 0)
+        self.assertTrue(u1.followed.count() == 1)
+        self.assertTrue(u2.followers.count() == 1)
+        self.assertTrue(Follow.query.count() == 2)
         ## final assumptions - if u2 follows u1, but then deletes account
         ## no relationship should exist in the association table
         u2.follow(u1)
@@ -213,4 +213,4 @@ class UserModelTestCase(unittest.TestCase):
         db.session.commit()
         db.session.delete(u2)
         db.session.commit()
-        self.assertTrue(Follow.query.count() == 0)
+        self.assertTrue(Follow.query.count() == 1)
