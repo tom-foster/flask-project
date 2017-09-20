@@ -12,6 +12,7 @@ class Config:
     FLASK_ADMIN = os.environ.get('FLASK_ADMIN')
     FLASK_POSTS_PER_PAGE = 15
     FLASK_FOLLOWERS_PER_PAGE = 20
+    FLASK_COMMENTS_PER_PAGE = 30
 
     @staticmethod
     def init_app(app):
