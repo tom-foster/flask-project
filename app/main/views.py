@@ -120,7 +120,6 @@ def post(id):
         return redirect(url_for('.post', id=post.id, page=-1))
     page = request.args.get('page', 1, type=int)
     if page == -1:
-        ## add flask comments to the config file
         page = (post.comments.count() - 1) // \
                current_app.config['FLASK_COMMENTS_PER_PAGE'] + 1
     pagination = post.comments.order_by(Comment.timestamp.asc()).paginate(
@@ -129,7 +128,6 @@ def post(id):
     comments = pagination.items
     return render_template('post.html', posts=[post], form=form,
                            comments=comments, pagination=pagination)
-    # return render_template('post.html', posts=[post])
 
 
 @main.route('/edit/<int:id>', methods=['GET', 'POST'])
