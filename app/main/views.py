@@ -106,7 +106,7 @@ def edit_profile_admin(id):
     form.about_me = user.about_me
     return render_template('edit_profile.html', form=form, user=user)
 
-@main.route('/post/<int:id>')
+@main.route('/post/<int:id>', methods=['GET', 'POST'])
 def post(id):
     """Pass in a post as a list so that you can reuse _posts.html for post.html"""
     post = Post.query.get_or_404(id)
