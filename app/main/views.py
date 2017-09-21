@@ -236,4 +236,3 @@ def moderate():
     comments = pagination.items
     return render_template('moderate.html', comments=comments,
                             pagination=pagination, page=page)
-
