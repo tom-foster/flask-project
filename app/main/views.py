@@ -239,7 +239,7 @@ def moderate():
 
 @main.route('/moderate/enable/<int:id>')
 @login_required
-def moderate_enable():
+def moderate_enable(id):
     comment = Comment.query.get_or_404(id)
     comment.disabled = False
     db.session.add(comment)
@@ -248,7 +248,7 @@ def moderate_enable():
 
 @main.route('/moderate/disable/<int:id>')
 @login_required
-def moderate_disable():
+def moderate_disable(id):
     comment = Comment.query.get_or_404(id)
     comment.disabled = True
     db.session.add(comment)
