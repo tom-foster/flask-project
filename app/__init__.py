@@ -41,4 +41,7 @@ def create_app(config_name):
     # as /auth/login
     app.register_blueprint(auth_blueprint, url_prefix="/auth")
 
+    from .api_1_0 import api as api_1_0_blueprint
+    app.register_blueprint(api_1_0_blueprint, url_prefix='/api/v1.0')
+
     return app
