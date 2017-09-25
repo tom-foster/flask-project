@@ -277,6 +277,22 @@ class User(UserMixin, db.Model):
             return None
         return User.query.get(data['id'])
 
+    def to_json(self):
+        """
+        Since this is used for the api, exclude email, username and role level
+        """
+        json_user = {
+            'url': url_for('api.get_user', id=self.id, _external=True),
+            'username': self.username,
+            'member_since': self.member_since,
+            'last_seen': self.last_seen,
+            'posts': url_for('api.get_user_posts', id=self.id, _external=True),
+            'followed_posts': url_for('api.get_user_followed_posts',
+                                      id=self.id, _external=True),
+            'post_count': self.posts.count()
+        }
+        return json_user
+
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -290,10 +306,9 @@ class AnonymousUser(AnonymousUserMixin):
 
 login_manager.anonymous_user = AnonymousUser
 
-## this call back receives a user identifier as a unicod e string
+## this call back receives a user identifier as a unicode string
 ## the return value of the function must be the user object if available or
 ## None otherwise
-
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
