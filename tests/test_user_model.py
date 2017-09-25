@@ -218,7 +218,7 @@ class UserModelTestCase(unittest.TestCase):
     def test_to_json(self):
         u = User(email='tom@example.com', password='hello')
         db.session.add(u)
-        db.seesion.commit()
+        db.session.commit()
         json_user = u.to_json()
         expected_keys = ['url', 'username', 'member_since', 'last_seen',
                          'posts', 'followed_posts', 'post_count']
