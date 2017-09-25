@@ -19,4 +19,11 @@ def forbidden(message):
 
 @api.errorhandler(ValidationError)
 def validation_error(e):
+    """
+    This takes an exception class as an argument.
+
+    When an exception is raised in a blueprint route, this will raise.abs
+
+    No need to error check the routes.
+    """
     return bad_request(e.args[0])
