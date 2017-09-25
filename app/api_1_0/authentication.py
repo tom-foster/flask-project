@@ -8,6 +8,10 @@ auth = HTTPBasicAuth()
 
 @auth.verify_password
 def verify_password(email_or_token, password):
+    """
+    Takes an email or token, assumes that if no email or password, it's a token.
+    g in flask is the global and you are setting variable names as g.token_used
+    """
     if email_or_token == '':
         g.current_user = AnonymousUser()
         return True
