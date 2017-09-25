@@ -367,7 +367,7 @@ class Post(db.Model):
     def from_json(json_post):
         body = json_post.get('body')
         if body is None or body == '':
-            raise ValidationError('Your post does not have a body')
+            raise ValidationError('Post does not have a body')
         return Post(body=body)
 
 db.event.listen(Post.body, 'set', Post.on_changed_body)
@@ -401,5 +401,11 @@ class Comment(db.Model):
                               _external=True)
         }
         return json_comment
+
+    def from_json(json_comment):
+        body = json_comment.get('body')
+        if body is None or body == '':
+            raise ValidationError('Comment does not have a body')
+        return Comment(body=body)
 
 db.event.listen(Comment.body, 'set', Comment.on_changed_body)
