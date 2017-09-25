@@ -4,7 +4,7 @@ from ..models import Post, Permission, Comment
 from . import api
 from .decorators import permission_required
 
-@api.route('/comments')
+@api.route('/comments/')
 def get_comments():
     page = request.args.get('page', 1, type=int)
     pagination = Comment.query.order_by(Comment.timestamp.desc()).paginate(
