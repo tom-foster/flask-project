@@ -16,3 +16,7 @@ def verify_password(email, password):
         return False
     g.current_user = user
     return user.verify_password(password)
+
+@auth.error_handler
+def auth_error():
+    return unauthorized('Invalid credentials')
