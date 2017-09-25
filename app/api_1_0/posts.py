@@ -27,9 +27,6 @@ def get_posts():
         'count': pagination.total
     })
 
-    # posts = Post.query.all()
-    # return jsonify({'posts' : [post.to_json() for post in posts]})
-
 @api.route('/posts/<int:id>')
 def get_post(id):
     post = Post.query.get_or_404(id)
