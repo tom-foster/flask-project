@@ -266,6 +266,10 @@ class User(UserMixin, db.Model):
 
     @staticmethod
     def verify_auth_token(token):
+        """
+            Static method, as the verification can only happen after the token
+            is decoded
+        """
         s = Serializer(current_app.config['SECRET_KEY'])
         try:
             data = s.loads(token)
