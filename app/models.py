@@ -402,6 +402,7 @@ class Comment(db.Model):
         }
         return json_comment
 
+    @staticmethod
     def from_json(json_comment):
         body = json_comment.get('body')
         if body is None or body == '':
