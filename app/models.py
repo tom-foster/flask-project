@@ -4,8 +4,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from markdown import markdown
 import bleach
-from flask import current_app, request
+from flask import current_app, request, url_for
 from flask_login import UserMixin, AnonymousUserMixin
+from app.exceptions import ValidationError
 from . import db, login_manager
 
 class Permission:
@@ -257,6 +258,11 @@ class User(UserMixin, db.Model):
         """ Obtain followed posts by a join on followed_id and author_id. """
         return Post.query.join(Follow, Follow.followed_id == Post.author_id)\
             .filter(Follow.follower_id == self.id)
+
+    def generate_auth_token(self, expiration):
+        s = Serializer(current_app.config['SECRET_KEY'],
+                       expires_in=expiration)
+        return s.dumps({'id': self.id}).decode('ascii')
 
 
     def __repr__(self):
