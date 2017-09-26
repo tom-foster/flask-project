@@ -1,5 +1,21 @@
 #!/usr/bin/env python
 import os
+
+## this is for the package coverage
+## find a os set variable if it isn't set, set it in the test command
+## which will stop the test and restart and the second run will support
+## coverage from the start.
+## this if statement together twith the coverage if statement in the test
+## make up that action.
+COV = None
+if os.environ.get('FLASK_COVERAGE'):
+    import coverage
+    ## the options cover branch coverage, and we only want to include the app
+    ## folder.
+    COV = coverage.coverage(branch=True, include='app/*')
+    COV.start()
+
+
 from app import create_app, db
 from app.models import User, Follow, Role, Permission, Post, Comment
 from flask_script import Manager, Shell
