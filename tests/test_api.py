@@ -273,3 +273,12 @@ class APITestCase(unittest.TestCase):
         json_response = json.loads(response.data.decode('utf-8'))
         self.assertIsNotNone(json_response.get('comments'))
         self.assertTrue(json_response.get('count', 0) == 2)
+
+        # get all the comments
+        response = self.client.get(
+            url_for('api.get_comments'),
+            headers=self.get_api_headers('keith@example.com', 'goodbye'))
+        self.assertTrue(response.status_code == 200)
+        json_response = json.loads(response.data.decode('utf-8'))
+        self.assertIsNotNone(json_response.get('comments'))
+        self.assertTrue(json_response.get('count', 0) == 2)
