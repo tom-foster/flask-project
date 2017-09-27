@@ -8,7 +8,7 @@ from app.models import Role, User, Post
 
 class SeleniumTestCase(unittest.TestCase):
     client = None
-    
+
     @classmethod
     def setUpClass(cls):
         # start firefox
@@ -16,7 +16,7 @@ class SeleniumTestCase(unittest.TestCase):
             cls.client = webdriver.Firefox()
         except:
             pass
-        
+
         # skip these tests if the browser could not be started
         if cls.client:
             # create the application
@@ -48,3 +48,17 @@ class SeleniumTestCase(unittest.TestCase):
 
             # give the server a second to ensure it is up
             time.sleep(1)
+
+    @classmethod
+    def teardownClass(cls):
+        if cls.client:
+            #stop the flask server and the browser
+            cls.client.get('http://localhost:5000/shutdown')
+            cls.client.close()
+
+            #destroy the db
+            db.drop_all()
+            db.session.remove()
+
+            #remove application context
+            cls.app_context.pop()
