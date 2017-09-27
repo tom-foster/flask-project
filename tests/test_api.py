@@ -27,6 +27,14 @@ class APITestCase(unittest.TestCase):
         return {
             'Authorization': 'Basic ' + b64encode(
                 (username + ':' + password).encode('utf-8')).decode('utf-8'),
-            'Accept': 'appliction/json',
+            'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
+
+    def test_404(self):
+        response = self.client.get(
+            '/wrong/url',
+            headers=self.get_api_headers('email', 'password'))
+        self.assertTrue(response.status_code == 404)
+        json_response = json.loads(response.data.decode('utf-8'))
+        self.assertTrue(json_response['error'] == 'not found')
