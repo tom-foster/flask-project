@@ -100,3 +100,18 @@ class APITestCase(unittest.TestCase):
             url_for('api.get_posts'),
             headers=self.get_api_headers('', ''))
         self.assertTrue(response.status_code == 200)
+
+    def test_unconfirmed_account(self):
+        """ add an unconfirmed user, and make sure page is forbidden."""
+        r = Role.query.filter_by(name='User').first()
+        self.assertIsNotNone(r)
+        u = User(email='tom@example.com', password='hello', confirmed=False,
+                 role=r)
+        db.session.add(u)
+        db.session.commit()
+
+        # get posts trying to with unconfirmed credentials
+        response = self.client.get(
+            url_for('api.get_posts'),
+            headers=self.get_api_headers('tom@example.com', 'hello'))
+        self.assertTrue(response.status_code == 403)
