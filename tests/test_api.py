@@ -18,4 +18,15 @@ class APITestCase(unittest.TestCase):
         db.session.remove()
         db.drop_all()
         self.app_context.pop()
-        
+
+    def get_api_headers(self, username, password):
+        """
+        Helper method that includes headers that will be needed will all
+        requests.
+        """
+        return {
+            'Authorization': 'Basic ' + b64encode(
+                (username + ':' + password).encode('utf-8')).decode('utf-8'),
+            'Accept': 'appliction/json',
+            'Content-Type': 'application/json'
+        }
