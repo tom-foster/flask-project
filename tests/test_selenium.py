@@ -47,7 +47,7 @@ class SeleniumTestCase(unittest.TestCase):
             threading.Thread(target=cls.app.run).start()
 
             # give the server a second to ensure it is up
-            time.sleep(1)
+            time.sleep(5)
 
     @classmethod
     def tearDownClass(cls):
@@ -75,3 +75,4 @@ class SeleniumTestCase(unittest.TestCase):
         self.client.get('http://localhost:5000/')
         self.assertTrue(re.search('Hello,\s+annonymous user!',
                                   self.client.page_source))
+                                  
