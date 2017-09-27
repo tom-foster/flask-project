@@ -43,4 +43,19 @@ class APITestCase(unittest.TestCase):
         response = self.client.get(url_for('api.get_posts'),
                                    content_type='application/json')
         self.assertTrue(response.status_code == 200)
-        
+    
+    def test_bad_auth(self):
+        """ check if a user can log in with incorrect details"""
+        r = Role.query.filter_by(name='User').first()
+        self.assertIsNotNone(r)
+        u = User(email='tom@example.com', password='hello', confirmed=True,
+                 role=r)
+        db.session.add(u)
+        db.session.commit()
+
+        # try with a bad password
+        response = self.client.get(
+            url_for('api.get_posts'),
+            headers=self.get_api_headers('tom@example.com', 'goodbye'))
+        self.assertTrue(response.status_code == 401)
+
