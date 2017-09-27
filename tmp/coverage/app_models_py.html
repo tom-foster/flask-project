@@ -8,7 +8,7 @@
     
     
     <meta http-equiv="X-UA-Compatible" content="IE=emulateIE7" />
-    <title>Coverage for app/models.py: 75%</title>
+    <title>Coverage for app/models.py: 79%</title>
     <link rel="stylesheet" href="style.css" type="text/css">
     
     <script type="text/javascript" src="jquery.min.js"></script>
@@ -24,15 +24,15 @@
 <div id="header">
     <div class="content">
         <h1>Coverage for <b>app/models.py</b> :
-            <span class="pc_cov">75%</span>
+            <span class="pc_cov">79%</span>
         </h1>
 
         <img id="keyboard_icon" src="keybd_closed.png" alt="Show keyboard shortcuts" />
 
         <h2 class="stats">
             243 statements &nbsp;
-            <span class="run hide_run shortkey_r button_toggle_run">191 run</span>
-            <span class="mis shortkey_m button_toggle_mis">52 missing</span>
+            <span class="run hide_run shortkey_r button_toggle_run">200 run</span>
+            <span class="mis shortkey_m button_toggle_mis">43 missing</span>
             <span class="exc shortkey_x button_toggle_exc">0 excluded</span>
 
             
@@ -327,7 +327,7 @@
 <p id="n256" class="stm run hide_run"><a href="#n256">256</a></p>
 <p id="n257" class="pln"><a href="#n257">257</a></p>
 <p id="n258" class="pln"><a href="#n258">258</a></p>
-<p id="n259" class="stm mis"><a href="#n259">259</a></p>
+<p id="n259" class="stm run hide_run"><a href="#n259">259</a></p>
 <p id="n260" class="pln"><a href="#n260">260</a></p>
 <p id="n261" class="pln"><a href="#n261">261</a></p>
 <p id="n262" class="stm run hide_run"><a href="#n262">262</a></p>
@@ -411,16 +411,16 @@
 <p id="n340" class="pln"><a href="#n340">340</a></p>
 <p id="n341" class="stm run hide_run"><a href="#n341">341</a></p>
 <p id="n342" class="pln"><a href="#n342">342</a></p>
-<p id="n343" class="stm mis"><a href="#n343">343</a></p>
+<p id="n343" class="stm run hide_run"><a href="#n343">343</a></p>
 <p id="n344" class="pln"><a href="#n344">344</a></p>
 <p id="n345" class="pln"><a href="#n345">345</a></p>
-<p id="n346" class="stm mis"><a href="#n346">346</a></p>
+<p id="n346" class="stm run hide_run"><a href="#n346">346</a></p>
 <p id="n347" class="pln"><a href="#n347">347</a></p>
 <p id="n348" class="pln"><a href="#n348">348</a></p>
 <p id="n349" class="pln"><a href="#n349">349</a></p>
 <p id="n350" class="stm run hide_run"><a href="#n350">350</a></p>
 <p id="n351" class="pln"><a href="#n351">351</a></p>
-<p id="n352" class="stm mis"><a href="#n352">352</a></p>
+<p id="n352" class="stm run hide_run"><a href="#n352">352</a></p>
 <p id="n353" class="pln"><a href="#n353">353</a></p>
 <p id="n354" class="pln"><a href="#n354">354</a></p>
 <p id="n355" class="pln"><a href="#n355">355</a></p>
@@ -431,15 +431,15 @@
 <p id="n360" class="pln"><a href="#n360">360</a></p>
 <p id="n361" class="pln"><a href="#n361">361</a></p>
 <p id="n362" class="pln"><a href="#n362">362</a></p>
-<p id="n363" class="stm mis"><a href="#n363">363</a></p>
+<p id="n363" class="stm run hide_run"><a href="#n363">363</a></p>
 <p id="n364" class="pln"><a href="#n364">364</a></p>
 <p id="n365" class="pln"><a href="#n365">365</a></p>
 <p id="n366" class="stm run hide_run"><a href="#n366">366</a></p>
 <p id="n367" class="pln"><a href="#n367">367</a></p>
-<p id="n368" class="stm mis"><a href="#n368">368</a></p>
-<p id="n369" class="stm mis"><a href="#n369">369</a></p>
-<p id="n370" class="stm mis"><a href="#n370">370</a></p>
-<p id="n371" class="stm mis"><a href="#n371">371</a></p>
+<p id="n368" class="stm run hide_run"><a href="#n368">368</a></p>
+<p id="n369" class="stm run hide_run"><a href="#n369">369</a></p>
+<p id="n370" class="stm run hide_run"><a href="#n370">370</a></p>
+<p id="n371" class="stm run hide_run"><a href="#n371">371</a></p>
 <p id="n372" class="pln"><a href="#n372">372</a></p>
 <p id="n373" class="stm run hide_run"><a href="#n373">373</a></p>
 <p id="n374" class="pln"><a href="#n374">374</a></p>
@@ -742,7 +742,7 @@
 <p id="t256" class="stm run hide_run">    <span class="op">@</span><span class="nam">property</span><span class="strut">&nbsp;</span></p>
 <p id="t257" class="pln">    <span class="key">def</span> <span class="nam">followed_posts</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
 <p id="t258" class="pln">        <span class="str">""" Obtain followed posts by a join on followed_id and author_id. """</span><span class="strut">&nbsp;</span></p>
-<p id="t259" class="stm mis">        <span class="key">return</span> <span class="nam">Post</span><span class="op">.</span><span class="nam">query</span><span class="op">.</span><span class="nam">join</span><span class="op">(</span><span class="nam">Follow</span><span class="op">,</span> <span class="nam">Follow</span><span class="op">.</span><span class="nam">followed_id</span> <span class="op">==</span> <span class="nam">Post</span><span class="op">.</span><span class="nam">author_id</span><span class="op">)</span><span class="xx">\</span><span class="strut">&nbsp;</span></p>
+<p id="t259" class="stm run hide_run">        <span class="key">return</span> <span class="nam">Post</span><span class="op">.</span><span class="nam">query</span><span class="op">.</span><span class="nam">join</span><span class="op">(</span><span class="nam">Follow</span><span class="op">,</span> <span class="nam">Follow</span><span class="op">.</span><span class="nam">followed_id</span> <span class="op">==</span> <span class="nam">Post</span><span class="op">.</span><span class="nam">author_id</span><span class="op">)</span><span class="xx">\</span><span class="strut">&nbsp;</span></p>
 <p id="t260" class="pln">            <span class="op">.</span><span class="nam">filter</span><span class="op">(</span><span class="nam">Follow</span><span class="op">.</span><span class="nam">follower_id</span> <span class="op">==</span> <span class="nam">self</span><span class="op">.</span><span class="nam">id</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
 <p id="t261" class="pln"><span class="strut">&nbsp;</span></p>
 <p id="t262" class="stm run hide_run">    <span class="key">def</span> <span class="nam">generate_auth_token</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">expiration</span><span class="op">)</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
@@ -826,16 +826,16 @@
 <p id="t340" class="pln"><span class="strut">&nbsp;</span></p>
 <p id="t341" class="stm run hide_run">    <span class="op">@</span><span class="nam">staticmethod</span><span class="strut">&nbsp;</span></p>
 <p id="t342" class="pln">    <span class="key">def</span> <span class="nam">on_changed_body</span><span class="op">(</span><span class="nam">target</span><span class="op">,</span> <span class="nam">value</span><span class="op">,</span> <span class="nam">oldvalue</span><span class="op">,</span> <span class="nam">initiator</span><span class="op">)</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
-<p id="t343" class="stm mis">        <span class="nam">allowed_tags</span> <span class="op">=</span> <span class="op">[</span><span class="str">'a'</span><span class="op">,</span> <span class="str">'abbr'</span><span class="op">,</span> <span class="str">'acronym'</span><span class="op">,</span> <span class="str">'b'</span><span class="op">,</span> <span class="str">'blockquote'</span><span class="op">,</span> <span class="str">'code'</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t343" class="stm run hide_run">        <span class="nam">allowed_tags</span> <span class="op">=</span> <span class="op">[</span><span class="str">'a'</span><span class="op">,</span> <span class="str">'abbr'</span><span class="op">,</span> <span class="str">'acronym'</span><span class="op">,</span> <span class="str">'b'</span><span class="op">,</span> <span class="str">'blockquote'</span><span class="op">,</span> <span class="str">'code'</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
 <p id="t344" class="pln">                        <span class="str">'em'</span><span class="op">,</span> <span class="str">'i'</span><span class="op">,</span> <span class="str">'li'</span><span class="op">,</span> <span class="str">'ol'</span><span class="op">,</span> <span class="str">'pre'</span><span class="op">,</span> <span class="str">'strong'</span><span class="op">,</span> <span class="str">'ul'</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
 <p id="t345" class="pln">                        <span class="str">'h1'</span><span class="op">,</span> <span class="str">'h2'</span><span class="op">,</span> <span class="str">'h3'</span><span class="op">,</span> <span class="str">'p'</span><span class="op">]</span><span class="strut">&nbsp;</span></p>
-<p id="t346" class="stm mis">        <span class="nam">target</span><span class="op">.</span><span class="nam">body_html</span> <span class="op">=</span> <span class="nam">bleach</span><span class="op">.</span><span class="nam">linkify</span><span class="op">(</span><span class="nam">bleach</span><span class="op">.</span><span class="nam">clean</span><span class="op">(</span><span class="strut">&nbsp;</span></p>
+<p id="t346" class="stm run hide_run">        <span class="nam">target</span><span class="op">.</span><span class="nam">body_html</span> <span class="op">=</span> <span class="nam">bleach</span><span class="op">.</span><span class="nam">linkify</span><span class="op">(</span><span class="nam">bleach</span><span class="op">.</span><span class="nam">clean</span><span class="op">(</span><span class="strut">&nbsp;</span></p>
 <p id="t347" class="pln">            <span class="nam">markdown</span><span class="op">(</span><span class="nam">value</span><span class="op">,</span> <span class="nam">output_format</span><span class="op">=</span><span class="str">'html'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
 <p id="t348" class="pln">            <span class="nam">tags</span><span class="op">=</span><span class="nam">allowed_tags</span><span class="op">,</span> <span class="nam">strip</span><span class="op">=</span><span class="nam">True</span><span class="op">)</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
 <p id="t349" class="pln"><span class="strut">&nbsp;</span></p>
 <p id="t350" class="stm run hide_run">    <span class="key">def</span> <span class="nam">to_json</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
 <p id="t351" class="pln">        <span class="str">"""The representation to JSON"""</span><span class="strut">&nbsp;</span></p>
-<p id="t352" class="stm mis">        <span class="nam">json_post</span> <span class="op">=</span> <span class="op">{</span><span class="strut">&nbsp;</span></p>
+<p id="t352" class="stm run hide_run">        <span class="nam">json_post</span> <span class="op">=</span> <span class="op">{</span><span class="strut">&nbsp;</span></p>
 <p id="t353" class="pln">            <span class="str">'url'</span><span class="op">:</span> <span class="nam">url_for</span><span class="op">(</span><span class="str">'api.get_post'</span><span class="op">,</span> <span class="nam">id</span><span class="op">=</span><span class="nam">self</span><span class="op">.</span><span class="nam">id</span><span class="op">,</span> <span class="nam">_external</span><span class="op">=</span><span class="nam">True</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
 <p id="t354" class="pln">            <span class="str">'body'</span><span class="op">:</span> <span class="nam">self</span><span class="op">.</span><span class="nam">body</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
 <p id="t355" class="pln">            <span class="str">'body_html'</span><span class="op">:</span> <span class="nam">self</span><span class="op">.</span><span class="nam">body_html</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
@@ -846,15 +846,15 @@
 <p id="t360" class="pln">                                <span class="nam">_external</span><span class="op">=</span><span class="nam">True</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
 <p id="t361" class="pln">            <span class="str">'comment_count'</span><span class="op">:</span> <span class="nam">self</span><span class="op">.</span><span class="nam">comments</span><span class="op">.</span><span class="nam">count</span><span class="op">(</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
 <p id="t362" class="pln">        <span class="op">}</span><span class="strut">&nbsp;</span></p>
-<p id="t363" class="stm mis">        <span class="key">return</span> <span class="nam">json_post</span><span class="strut">&nbsp;</span></p>
+<p id="t363" class="stm run hide_run">        <span class="key">return</span> <span class="nam">json_post</span><span class="strut">&nbsp;</span></p>
 <p id="t364" class="pln"><span class="strut">&nbsp;</span></p>
 <p id="t365" class="pln"><span class="strut">&nbsp;</span></p>
 <p id="t366" class="stm run hide_run">    <span class="op">@</span><span class="nam">staticmethod</span><span class="strut">&nbsp;</span></p>
 <p id="t367" class="pln">    <span class="key">def</span> <span class="nam">from_json</span><span class="op">(</span><span class="nam">json_post</span><span class="op">)</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
-<p id="t368" class="stm mis">        <span class="nam">body</span> <span class="op">=</span> <span class="nam">json_post</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="str">'body'</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
-<p id="t369" class="stm mis">        <span class="key">if</span> <span class="nam">body</span> <span class="key">is</span> <span class="nam">None</span> <span class="key">or</span> <span class="nam">body</span> <span class="op">==</span> <span class="str">''</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
-<p id="t370" class="stm mis">            <span class="key">raise</span> <span class="nam">ValidationError</span><span class="op">(</span><span class="str">'Post does not have a body'</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
-<p id="t371" class="stm mis">        <span class="key">return</span> <span class="nam">Post</span><span class="op">(</span><span class="nam">body</span><span class="op">=</span><span class="nam">body</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
+<p id="t368" class="stm run hide_run">        <span class="nam">body</span> <span class="op">=</span> <span class="nam">json_post</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="str">'body'</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
+<p id="t369" class="stm run hide_run">        <span class="key">if</span> <span class="nam">body</span> <span class="key">is</span> <span class="nam">None</span> <span class="key">or</span> <span class="nam">body</span> <span class="op">==</span> <span class="str">''</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
+<p id="t370" class="stm run hide_run">            <span class="key">raise</span> <span class="nam">ValidationError</span><span class="op">(</span><span class="str">'Post does not have a body'</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
+<p id="t371" class="stm run hide_run">        <span class="key">return</span> <span class="nam">Post</span><span class="op">(</span><span class="nam">body</span><span class="op">=</span><span class="nam">body</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
 <p id="t372" class="pln"><span class="strut">&nbsp;</span></p>
 <p id="t373" class="stm run hide_run"><span class="nam">db</span><span class="op">.</span><span class="nam">event</span><span class="op">.</span><span class="nam">listen</span><span class="op">(</span><span class="nam">Post</span><span class="op">.</span><span class="nam">body</span><span class="op">,</span> <span class="str">'set'</span><span class="op">,</span> <span class="nam">Post</span><span class="op">.</span><span class="nam">on_changed_body</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
 <p id="t374" class="pln"><span class="strut">&nbsp;</span></p>
@@ -906,7 +906,7 @@
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v4.4.1</a>,
-            created at 2017-09-27 18:54
+            created at 2017-09-27 20:04
         </p>
     </div>
 </div>

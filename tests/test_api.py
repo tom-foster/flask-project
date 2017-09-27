@@ -115,3 +115,70 @@ class APITestCase(unittest.TestCase):
             url_for('api.get_posts'),
             headers=self.get_api_headers('tom@example.com', 'hello'))
         self.assertTrue(response.status_code == 403)
+
+    def test_posts(self):
+        """
+        1. Write an empty post, and expect 400
+        2. Write a post
+        3. Get the new post
+        4. Get the post from the user
+        5. Get the post from the user as a follower - still use same person,
+           since they are a follower.
+        """
+        r = Role.query.filter_by(name='User').first()
+        self.assertIsNotNone(r)
+        u = User(email='tom@example.com', password='hello', confirmed=True,
+                 role=r)
+        db.session.add(u)
+        db.session.commit()
+
+        #write an empty post
+        response = self.client.post(
+            url_for('api.new_post'),
+            headers=self.get_api_headers('tom@example.com', 'hello'),
+            data=json.dumps({'body': ''}))
+        self.assertTrue(response.status_code == 400)
+
+        # write a post
+        response = self.client.post(
+            url_for('api.new_post'),
+            headers=self.get_api_headers('tom@example.com', 'hello'),
+            data=json.dumps({'body': 'a *TEST* blog post'}))
+        self.assertTrue(response.status_code == 201)
+        ## this url will be used further down too in this test.
+        url = response.headers.get('Location')
+        self.assertIsNotNone(url)
+
+        # get the newly written post
+        response = self.client.get(
+            url,
+            headers=self.get_api_headers('tom@example.com', 'hello'))
+        self.assertTrue(response.status_code == 200)
+        json_response = json.loads(response.data.decode('utf-8'))
+        self.assertTrue(json_response['url'] == url)
+        self.assertTrue(json_response['body'] == 'a *TEST* blog post')
+        self.assertTrue(json_response['body_html'] == 
+                        '<p>a <em>TEST</em> blog post</p>')
+        json_post = json_response
+
+        # get the post from the user as a follower
+        response = self.client.get(
+            url_for('api.get_user_followed_posts', id=u.id),
+            headers=self.get_api_headers('tom@example.com', 'hello'))
+        self.assertTrue(response.status_code == 200)
+        json_response = json.loads(response.data.decode('utf-8'))
+        self.assertIsNotNone(json_response.get('posts'))
+        self.assertTrue(json_response.get('count', 0) == 1)
+        self.assertTrue(json_response['posts'][0] == json_post)
+        
+        # edit post
+        response = self.client.put(
+            url,
+            headers=self.get_api_headers('tom@example.com', 'hello'),
+            data=json.dumps({'body': 'updated body post put test'}))
+        self.assertTrue(response.status_code == 200)
+        json_response = json.loads(response.data.decode('utf-8'))
+        self.assertTrue(json_response['url'] == url)
+        self.assertTrue(json_response['body'] == 'updated body post put test')
+        self.assertTrue(json_response['body_html'] ==
+                        '<p>updated body post put test</p>')
