@@ -157,7 +157,7 @@ class APITestCase(unittest.TestCase):
         json_response = json.loads(response.data.decode('utf-8'))
         self.assertTrue(json_response['url'] == url)
         self.assertTrue(json_response['body'] == 'a *TEST* blog post')
-        self.assertTrue(json_response['body_html'] == 
+        self.assertTrue(json_response['body_html'] ==
                         '<p>a <em>TEST</em> blog post</p>')
         json_post = json_response
 
@@ -170,7 +170,7 @@ class APITestCase(unittest.TestCase):
         self.assertIsNotNone(json_response.get('posts'))
         self.assertTrue(json_response.get('count', 0) == 1)
         self.assertTrue(json_response['posts'][0] == json_post)
-        
+
         # edit post
         response = self.client.put(
             url,
@@ -182,3 +182,30 @@ class APITestCase(unittest.TestCase):
         self.assertTrue(json_response['body'] == 'updated body post put test')
         self.assertTrue(json_response['body_html'] ==
                         '<p>updated body post put test</p>')
+
+    def test_users(self):
+        """
+        Add multiple users, test api.get_user"
+        """
+        r = Role.query.filter_by(name='User').first()
+        self.assertIsNotNone(r)
+        u1 = User(email='tom@example.com', username='tom', password='hello',
+                  confirmed=True, role=r)
+        u2 = User(email='keith@example.com', username='keith',
+                  password='goodbye', confirmed=True, role=r)
+        db.session.add_all([u1, u2])
+        db.session.commit()
+
+        #get those users
+        response = self.client.get(
+            url_for('api.get_user', id=u1.id),
+            headers=self.get_api_headers('tom@example.com', 'hello'))
+        self.assertTrue(response.status_code == 200)
+        json_response = json.loads(response.data.decode('utf-8'))
+        self.assertTrue(json_response['username'] == 'tom')
+        response = self.client.get(
+            url_for('api.get_user', id=u2.id),
+            headers=self.get_api_headers('tom@example.com', 'hello'))
+        self.assertTrue(response.status_code == 200)
+        json_response = json.loads(response.data.decode('utf-8'))
+        self.assertTrue(json_response['username'] == 'keith')
