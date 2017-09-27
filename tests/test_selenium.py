@@ -36,7 +36,7 @@ class SeleniumTestCase(unittest.TestCase):
             Post.generate_fake(10)
 
             # add an admin user
-            admin_role = Role.query.filter_by(permission=0xff).first()
+            admin_role = Role.query.filter_by(permissions=0xff).first()
             admin = User(email='tom@example.com',
                          username='tom', password='hello',
                          role=admin_role, confirmed=True)
@@ -69,3 +69,9 @@ class SeleniumTestCase(unittest.TestCase):
         
     def tearDown(self):
         pass
+
+    def test_admin_home_page(self):
+        #navigate to homepage
+        self.client.get('http://localhost:5000/')
+        self.assertTrue(re.search('Hello,\s+annonymous user!',
+                                  self.client.page_source))
