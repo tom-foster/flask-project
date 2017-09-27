@@ -93,3 +93,10 @@ class APITestCase(unittest.TestCase):
             url_for('api.get_posts'),
             headers=self.get_api_headers(token, ''))
         self.assertTrue(response.status_code == 200)
+
+    def test_anonymous(self):
+        """Make sure you can still get posts even if anon"""
+        response = self.client.get(
+            url_for('api.get_posts'),
+            headers=self.get_api_headers('', ''))
+        self.assertTrue(response.status_code == 200)
