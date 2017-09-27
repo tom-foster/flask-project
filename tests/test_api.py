@@ -1,4 +1,5 @@
 import json
+import re
 import unittest
 from base64 import b64encode
 from flask import url_for
@@ -209,3 +210,66 @@ class APITestCase(unittest.TestCase):
         self.assertTrue(response.status_code == 200)
         json_response = json.loads(response.data.decode('utf-8'))
         self.assertTrue(json_response['username'] == 'keith')
+
+    def test_comments(self):
+        """
+        1. Write a comment
+        2. Get the new comment
+        3. Add a second comment
+        4. Get both comments
+        5. Get ALL comments
+        """
+        r = Role.query.filter_by(name='User').first()
+        self.assertIsNotNone(r)
+        u1 = User(email='tom@example.com', username='tom',
+                  password='hello', confirmed=True, role=r)
+        u2 = User(email='keith@example.com', username='keith',
+                  password='goodbye', confirmed=True, role=r)
+        db.session.add_all([u1, u2])
+        db.session.commit()
+
+        # add a post
+        post = Post(body='body of the post', author=u1)
+        db.session.add(post)
+        db.session.commit()
+
+        # write a comment
+        response = self.client.post(
+            url_for('api.new_post_comment', id=post.id),
+            headers=self.get_api_headers('keith@example.com', 'goodbye'),
+            data=json.dumps(
+                {'body': 'Not as good as [this post](http://example.com).'}))
+        print(response.status_code)
+        self.assertTrue(response.status_code == 201)
+        json_response = json.loads(response.data.decode('utf-8'))
+        url = response.headers.get('Location')
+        self.assertIsNotNone(url)
+        self.assertTrue(json_response['body'] ==
+                        'Not as good as [this post](http://example.com).')
+        self.assertTrue(
+            re.sub('<.*?>', '', json_response['body_html']) ==
+            'Not as good as this post.')
+
+        # get the new comment
+        response = self.client.get(
+            url,
+            headers=self.get_api_headers('tom@example.com', 'hello'))
+        self.assertTrue(response.status_code == 200)
+        json_response = json.loads(response.data.decode('utf-8'))
+        self.assertTrue(json_response['url'] == url)
+        self.assertTrue(json_response['body'] ==
+                        'Not as good as [this post](http://example.com).')
+        
+        # add another comment
+        comment = Comment(body='I guess I\ll try harder', author=u1, post=post)
+        db.session.add(comment)
+        db.session.commit()
+
+        # get the comments from the post
+        response = self.client.get(
+            url_for('api.get_post_comments', id=post.id),
+            headers=self.get_api_headers('keith@example.com', 'goodbye'))
+        self.assertTrue(response.status_code == 200)
+        json_response = json.loads(response.data.decode('utf-8'))
+        self.assertIsNotNone(json_response.get('comments'))
+        self.assertTrue(json_response.get('count', 0) == 2)
