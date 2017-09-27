@@ -38,3 +38,9 @@ class APITestCase(unittest.TestCase):
         self.assertTrue(response.status_code == 404)
         json_response = json.loads(response.data.decode('utf-8'))
         self.assertTrue(json_response['error'] == 'not found')
+
+    def test_no_auth(self):
+        response = self.client.get(url_for('api.get_posts'),
+                                   content_type='application/json')
+        self.assertTrue(response.status_code == 200)
+        
