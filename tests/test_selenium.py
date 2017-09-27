@@ -50,7 +50,7 @@ class SeleniumTestCase(unittest.TestCase):
             time.sleep(1)
 
     @classmethod
-    def teardownClass(cls):
+    def tearDownClass(cls):
         if cls.client:
             #stop the flask server and the browser
             cls.client.get('http://localhost:5000/shutdown')
@@ -62,3 +62,10 @@ class SeleniumTestCase(unittest.TestCase):
 
             #remove application context
             cls.app_context.pop()
+
+    def setUp(self):
+        if not self.client:
+            self.skipTest('Web browser not available')
+        
+    def tearDown(self):
+        pass
