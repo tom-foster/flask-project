@@ -13,7 +13,7 @@ class SeleniumTestCase(unittest.TestCase):
     def setUpClass(cls):
         # start firefox
         try:
-            cls.client = webdriver.Firefox()
+            cls.client = webdriver.Chrome('/usr/local/share/chromedriver')
         except:
             pass
 
@@ -73,6 +73,6 @@ class SeleniumTestCase(unittest.TestCase):
     def test_admin_home_page(self):
         #navigate to homepage
         self.client.get('http://localhost:5000/')
-        self.assertTrue(re.search('Hello,\s+annonymous user!',
+        self.assertTrue(re.search('Hello,\s+anonymous user!',
                                   self.client.page_source))
                                   
