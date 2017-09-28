@@ -75,4 +75,21 @@ class SeleniumTestCase(unittest.TestCase):
         self.client.get('http://localhost:5000/')
         self.assertTrue(re.search('Hello,\s+anonymous user!',
                                   self.client.page_source))
+
+        #navigate to the login page
+        self.client.find_element_by_link_text('Login').click()
+        self.assertTrue('<h1>Login</h1>' in self.client.page_source)
+        
+        #login
+        self.client.find_element_by_name('email').\
+            send_keys('tom@example.com')
+        self.client.find_element_by_name('password').\
+            send_keys('hello')
+        self.client.find_element_by_name('submit').click()
+        # should return main.index
+        self.assertTrue(re.search('Hello,\s+tom', self.client.page_source))
+
+        #navigate to the user's profile page
+        self.client.find_element_by_link_text('Profile').click()
+        self.assertTrue('<h1>tom</h1>' in self.client.page_source)
                                   
