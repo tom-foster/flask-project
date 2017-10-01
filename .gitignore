@@ -2,3 +2,6 @@ venv/
 
 #ignore all database files
 *.sqlite
+
+#ignore heroku .env
+.env
