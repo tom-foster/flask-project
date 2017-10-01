@@ -1,4 +1,6 @@
 -r requirements/prod.txt
+# ssl
+Flask-SSLify==0.1.5
 # web server
 gunicorn==19.7.1
 # for postgres
