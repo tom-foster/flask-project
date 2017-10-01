@@ -1,4 +1,4 @@
--r requirements/prod.txt
+-r prod.txt
 # web server
 gunicorn==19.7.1
 # for postgres
