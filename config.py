@@ -8,6 +8,12 @@ class Config:
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_RECORD_QUERIES = True
+    MAIL_SERVER = 'smtp.gmail.com'
+    MAIL_PORT = 587
+    MAIL_USE_TLS = True
+    ## For the virtual box the environmental variables always need to be declared
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     FLASK_MAIL_SUBJECT_PREFIX = '[TF FLASK PROJECT - BOOP!]'
     FLASK_MAIL_SENDER = 'TF FLASK APP <tom@example.com>'
     #set this in the virtualbox environment variables
@@ -23,12 +29,6 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    MAIL_SERVER = 'smtp.gmail.com'
-    MAIL_PORT = 587
-    MAIL_USE_TLS = True
-    ## For the virtual box the environmental variables always need to be declared
-    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
-    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite')
 
@@ -42,6 +42,29 @@ class TestingConfig(Config):
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'data.sqlite')
+
+    @classmethod
+    def init_app(cls, app):
+        Config.init_app(app)
+
+        #email errors to the administrators
+        import logging
+        from logging.handlers import SMTPHandler
+        credentials = None
+        secure = None
+        if getattr(cls, 'MAIL_USERNAME', None) is not None:
+            credentials = (cls.MAIL_USERNAME, cls.MAIL_PASSWORD)
+            if getattr(cls, 'MAIL_USE_TLS', None):
+                secure = ()
+        mail_handler = SMTPHandler(
+            mailhost = (cls.MAIL_SERVER, cls.MAIL_PORT),
+            fromaddr=cls.FLASK_MAIL_SENDER,
+            toaddrs=[cls.FLASK_ADMIN],
+            subject=cls.FLASK_MAIL_SUBJECT_PREFIX + ' Application Error',
+            credentials=credentials,
+            secure=secure)
+        mail_handler.setLevel(logging.ERROR)
+        app.logger.addHandler(mail_handler)
 
 config = {
     'development' : DevelopmentConfig,
