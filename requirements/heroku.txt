@@ -1,0 +1,5 @@
+-r requirements/prod.txt
+# web server
+gunicorn==19.7.1
+# for postgres
+psycopg2==2.7.3.1
