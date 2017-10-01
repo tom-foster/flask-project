@@ -30,7 +30,6 @@ Markdown==2.6.9
 MarkupSafe==1.0
 mccabe==0.6.1
 packaging==16.8
-pkg-resources==0.0.0
 pylint==1.7.2
 pyparsing==2.2.0
 python-dateutil==2.6.0
