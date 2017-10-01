@@ -57,7 +57,7 @@ class ProductionConfig(Config):
             if getattr(cls, 'MAIL_USE_TLS', None):
                 secure = ()
         mail_handler = SMTPHandler(
-            mailhost = (cls.MAIL_SERVER, cls.MAIL_PORT),
+            mailhost=(cls.MAIL_SERVER, cls.MAIL_PORT),
             fromaddr=cls.FLASK_MAIL_SENDER,
             toaddrs=[cls.FLASK_ADMIN],
             subject=cls.FLASK_MAIL_SUBJECT_PREFIX + ' Application Error',
