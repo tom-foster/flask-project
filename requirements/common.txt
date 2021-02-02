@@ -2,7 +2,7 @@ alembic==0.9.2
 appdirs==1.4.3
 astroid==1.5.3
 backports.functools-lru-cache==1.4
-bleach==2.0.0
+bleach==3.3.0
 blinker==1.4
 click==6.7
 configparser==3.5.0
